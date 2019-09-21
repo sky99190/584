@@ -5,6 +5,7 @@ Spyder Editor
 This is a temporary script file.
 """
 import re
+import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 def checkTitle_pg1661(a):
@@ -69,6 +70,7 @@ def pg1661():
         line=fp.readline()
         while line!='\n':
             line=line.strip('\n')
+            line=re.sub(r'[^\w\s]','',line)
             data=data+' '+line
             line=fp.readline()
         p.append(data)
@@ -76,19 +78,8 @@ def pg1661():
         while line=='\n' or line.strip()=='' or checkTitle_pg1661(line)==1:
             line=fp.readline()
     fp.close()
-    '''
-    for i in range(10):
-        print(i)
-        print(p[50+i])
-        print("**********************************")
-        '''
-    #print(p.index("VIII. THE ADVENTURE OF THE SPECKLED BAND"))
     
-    
-    
-    vectorizer = TfidfVectorizer()
-    matrix = vectorizer.fit_transform(p)
-    print(matrix)
+    return p,pAll
     
 def pg31100():
     fp=open('data/pg31100.txt','r',encoding='utf8');#读文件内容
@@ -106,6 +97,7 @@ def pg31100():
         line=fp.readline()
         while line!='\n':
             line=line.strip('\n')
+            line=re.sub(r'[^\w\s]','',line)
             data=data+' '+line
             line=fp.readline()
         p.append(data)
@@ -113,19 +105,9 @@ def pg31100():
         while line=='\n' or line.strip()=='' or checkTitle_pg31100(line)==1:
             line=fp.readline()
     fp.close()
-    '''
-    for i in range(10):
-        print(i)
-        print(p[50+i])
-        print("**********************************")
-        '''
-    #print(p.index("VIII. THE ADVENTURE OF THE SPECKLED BAND"))
+    return p,pAll
     
     
-    
-    vectorizer = TfidfVectorizer()
-    matrix = vectorizer.fit_transform(p)
-    print(matrix)
     
 def pg280540():
     fp=open('data/28054-0.txt','r',encoding='utf8');#读文件内容
@@ -143,6 +125,7 @@ def pg280540():
         line=fp.readline()
         while line!='\n':
             line=line.strip('\n')
+            line=re.sub(r'[^\w\s]','',line)
             data=data+' '+line
             line=fp.readline()
         p.append(data)
@@ -150,18 +133,15 @@ def pg280540():
         while line=='\n' or line.strip()=='' or checkTitle_pg280540(line)==1:
             line=fp.readline()
     fp.close()
-    '''
-    for i in range(10):
-        print(i)
-        print(p[50+i])
-        print("**********************************")
-        '''
-    #print(p.index("VIII. THE ADVENTURE OF THE SPECKLED BAND"))
+    return p,pAll
     
-    
-    
-    vectorizer = TfidfVectorizer()
-    matrix = vectorizer.fit_transform(p)
-    print(matrix)
-    
-pg280540()
+p1,p1All=pg1661()
+p2,p2All=pg31100()
+p3,p3All=pg280540()
+
+p1s=random.shuffle(random.shuffle(p1))
+p2s=random.shuffle(random.shuffle(p2))
+p3s=random.shuffle(random.shuffle(p3))
+vectorizer = TfidfVectorizer()
+matrix = vectorizer.fit_transform([p1All,p2All,p3All])
+print(matrix)
